@@ -1,0 +1,42 @@
+{
+  "name": "react-express-template",
+  "version": "0.0.1",
+  "description": "Starting point for a react/express js project",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "lint": "eslint . --ext .js,.jsx",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chrisspadanuta/react-express-template.git"
+  },
+  "keywords": [
+    "template"
+  ],
+  "author": "Chris Spadanuta",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chrisspadanuta/react-express-template/issues"
+  },
+  "homepage": "https://github.com/chrisspadanuta/react-express-template#readme",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.11.1",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-react": "^7.12.0",
+    "pre-commit": "^1.2.2"
+  },
+  "pre-commit": [
+    "lint"
+  ]
+}
