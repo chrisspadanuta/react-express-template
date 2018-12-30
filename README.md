@@ -10,3 +10,6 @@ Linting pre-commit hook currently not enabled.  Add this to package.json to enab
   "pre-commit": [
     "lint"
   ]
+
+Run lint manually:
+npm run lint
