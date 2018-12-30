@@ -13,3 +13,5 @@ Linting pre-commit hook currently not enabled.  Add this to package.json to enab
 
 Run lint manually:
 npm run lint
+
+npx webpack --config webpack/config.babel.js

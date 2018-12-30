@@ -1,0 +1,11 @@
+body {
+  background: black;
+}
+
+.globalClass {
+  color: blue;
+}
+
+:local(.localClass) {
+  color: red;
+}
