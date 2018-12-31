@@ -1,4 +1,4 @@
-const base = '/api/';
+const base = '/api';
 
 function buildPath(path) {
   return base + path;
@@ -7,7 +7,7 @@ function buildPath(path) {
 function get(path) {
   return fetch(buildPath(path), {
     method: 'GET'
-  })
+  }).then(result => result.json());
 }
 
 function post(path, body) {
@@ -17,7 +17,7 @@ function post(path, body) {
       "Content-Type": 'application/json'
     },
     body: JSON.stringify(body)
-  });
+  }).then(result => result.json());
 }
 
 export default {

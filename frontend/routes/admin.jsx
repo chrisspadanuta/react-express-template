@@ -2,6 +2,7 @@ import React from 'react';
 
 import './admin.scss';
 import EditableQuestion from '../components/editable-question';
+import adminService from '../services/admin-service';
 
 function createQuestion() {
   return { question: '', choices: ['', ''] }
@@ -12,22 +13,65 @@ class Admin extends React.PureComponent {
     super(props);
 
     this.state = {
-      questions: [
-        createQuestion(),
-      ],
-      error: 'test error'
+      poll: {
+        questions: [
+          createQuestion(),
+        ],
+      }
     };
 
     this.removeQuestion = this.removeQuestion.bind(this);
     this.addQuestion = this.addQuestion.bind(this);
     this.updateQuestion = this.updateQuestion.bind(this);
-    this.saveQuestions = this.saveQuestions.bind(this);
+    this.savePoll = this.savePoll.bind(this);
+    this.closeStatus = this.closeStatus.bind(this);
+  }
+
+  async componentDidMount() {
+    this.loadPoll();
+  }
+
+  async loadPoll() {
+    try {
+      const poll = await adminService.loadPoll();
+      this.setState({
+        poll: poll,
+      });
+    } catch (e) {
+      this.setState({
+        status: {
+          error: true,
+          message: e.message
+        }
+      });
+    }
+  }
+
+  async savePoll() {
+    try {
+      const statusMessage = await adminService.savePoll(this.state.poll);
+      this.setState({
+        status: {
+          error: false,
+          message: statusMessage,
+        }
+      });
+    } catch (e) {
+      this.setState({
+        status: {
+          error: true,
+          message: e.message
+        }
+      });
+    }
   }
 
   removeQuestion() {
     this.setState((prevState) => {
       return {
-        questions: [...prevState.questions.slice(0, -1)],
+        poll: {
+          questions: [...prevState.poll.questions.slice(0, -1)],
+        }
       };
     });
   }
@@ -35,38 +79,67 @@ class Admin extends React.PureComponent {
   addQuestion() {
     this.setState((prevState) => {
       return {
-        questions: [...prevState.questions, createQuestion()],
+        poll: {
+          questions: [...prevState.poll.questions, createQuestion()],
+        }
       };
     });
   }
 
   updateQuestion(item, index) {
-    console.log('updateQuestion ', item);
     this.setState((prevState) => {
-      const oldQuestions = prevState.questions;
+      const oldQuestions = prevState.poll.questions;
       return {
-        questions: [
-          ...oldQuestions.slice(0, index),
-          item,
-          ...oldQuestions.slice(index + 1),
-        ]
+        poll: {
+          questions: [
+            ...oldQuestions.slice(0, index),
+            item,
+            ...oldQuestions.slice(index + 1),
+          ]
+        }
       }
     });
   }
 
-  saveQuestions() {
+  closeStatus() {
+    this.setState({
+      status: null
+    })
+  }
 
+  renderStatusArea(status) {
+    if (!status) {
+      return null;
+    }
+
+    const className = (status.error ? 'error ' : '') + 'status-area';
+
+    return (
+      <div className={className}>
+        {status.message}
+        <div className="close" onClick={this.closeStatus}>&times;</div>
+      </div>
+    );
   }
 
   render() {
+    if (!this.state.poll) {
+      return (
+        <div>Loading ...</div>
+      );
+    }
+
+    const questions = this.state.poll.questions;
+    const status = this.state.status;
+
     return (
       <React.Fragment>
         <h1>Admin page</h1>
         <div className="layout">
           <div className="content">
-            {this.state.error && <div className="error-area">{this.state.error}</div>}
+            {this.renderStatusArea(status)}
             <div className="questions">
-              {this.state.questions.map((question, index) => {
+              {questions.map((question, index) => {
                 return (
                   <React.Fragment key={index}>
                     <EditableQuestion item={question} index={index} updateQuestion={this.updateQuestion}/>
@@ -75,12 +148,12 @@ class Admin extends React.PureComponent {
                 );
               })}
               <div className="question-toolbar">
-                {this.state.questions.length > 1 ? <button type="button" className="remove" onClick={this.removeQuestion}>Remove Question</button> : null}
+                {questions.length > 1 ? <button type="button" className="remove" onClick={this.removeQuestion}>Remove Question</button> : null}
                 <button type="button" className="add" onClick={this.addQuestion}>Add Question</button>
               </div>
             </div>
             <hr/>
-            <button type="submit" className="save-button" onClick={this.saveQuestions}>Save</button>
+            <button type="submit" className="save-button" onClick={this.savePoll}>Save</button>
           </div>
         </div>
       </React.Fragment>

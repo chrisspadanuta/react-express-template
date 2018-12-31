@@ -14,7 +14,6 @@ class EditableQuestion extends React.PureComponent {
 
   changeQuestion(e) {
     let value = e.target.value;
-    console.log(`target value: ${e.target.value}`);
 
     const oldChoices = this.props.item.choices;
     const item = {

@@ -1,12 +1,16 @@
 import express from 'express';
 
+import questionsService from '../services/questions.service'
+
 const router = express.Router();
 
-router.route('/poll/:id')
+router.route('/poll')
   .get((req, res) => {
-    res.status(200).json({ result: `get ${req.params.id}` });
+    const poll = questionsService.retrievePoll();
+    res.status(200).json(poll);
   }).post((req, res) => {
-    res.status(200).json({ result: `post ${req.params.id}` });
+    questionsService.savePoll(req.body);
+    res.status(200).json({ result: `success` });
   });
 
 export default router;

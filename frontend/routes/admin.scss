@@ -9,12 +9,25 @@
   align-items: center;
 }
 
-.error-area {
-  border: 1px solid maroon;
-  background-color: red;
+.status-area {
+  position: relative;
+  border: 1px solid darkgreen;
+  background-color: forestgreen;
   border-radius: 8px;
   width: 800px;
-  padding: 5px 10px
+  padding: 5px 10px;
+  &.error {
+    border: 1px solid maroon;
+    background-color: red;
+  }
+  .close {
+    position: absolute;
+    top: 0;
+    right: 5px;
+    font-weight: bold;
+    font-size: 22px;
+    cursor: pointer;
+  }
 }
 
 .questions {
