@@ -1,17 +1,22 @@
 /**
- * Webpack configuration for development
+ * Webpack configuration for production
  */
 
 import path from 'path';
+import webpack from 'webpack';
 
 export default {
-  devtool: 'eval-source-map',
+  devtool: 'source-map',
   entry: path.join(process.cwd(), 'src/index'),
   output: {
     filename: 'bundle.js',
     path: path.join(process.cwd(), 'public', 'js'),
     publicPath: '/js',
   },
+  plugins: [
+    new webpack.optimize.OccurrenceOrderPlugin(true),
+    new webpack.optimize.UglifyJsPlugin(),
+  ],
   module: {
     rules: [
       {
