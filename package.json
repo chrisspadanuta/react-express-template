@@ -8,7 +8,7 @@
     "build": "NODE_ENV=production npx env-cmd .env webpack --config ./webpack/config-prod.babel.js",
     "postinstall": "npm run build",
     "dev": "nodemon --exec babel-node ./server/index.js",
-    "lint": "eslint . --ext .js,.jsx",
+    "lint": "eslint . --ext .js,.jsx"
   },
   "repository": {
     "type": "git",
