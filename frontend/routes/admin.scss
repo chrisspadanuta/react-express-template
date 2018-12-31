@@ -1,0 +1,54 @@
+.layout {
+  display: flex;
+  justify-content: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.error-area {
+  border: 1px solid maroon;
+  background-color: red;
+  border-radius: 8px;
+  width: 800px;
+  padding: 5px 10px
+}
+
+.questions {
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+}
+
+.question-toolbar {
+  display: flex;
+  justify-content: space-between;
+  button {
+    flex: 1;
+    margin: 5px;
+    border-radius: 4px;
+    padding: 5px;
+    color: white;
+    text-transform: uppercase;
+    &.remove {
+      background-color: maroon;
+      border: 2px solid maroon;
+    }
+    &.add {
+      background-color: darkgreen;
+      border: 2px solid darkgreen;
+    }
+  }
+}
+
+.save-button {
+  margin-left: auto;
+  padding: 10px;
+}
+
+hr {
+  width: 100%;
+}

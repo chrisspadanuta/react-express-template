@@ -1,0 +1,61 @@
+.editable-question {
+  display: flex;
+  flex-direction: column;
+  margin: 0 10px;
+}
+
+.question-box {
+  resize: none;
+  height: 100px;
+  font-size: 16px;
+}
+
+.answer-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 0 10px 0;
+  .sub-item {
+    margin: 0 5px;
+  }
+  .label {
+    flex: initial;
+  }
+  .input-box {
+    flex: auto;
+  }
+}
+
+.answer-toolbar {
+  display: flex;
+  justify-content: space-between;
+  button {
+    flex: 1;
+    margin: 5px;
+    border-radius: 4px;
+    padding: 5px;
+    color: white;
+    &.remove {
+      background-color: maroon;
+      border: 2px solid maroon;
+    }
+    &.add {
+      background-color: darkgreen;
+      border: 2px solid darkgreen;
+    }
+  }
+}
+
+h2 {
+  margin: 5px 0;
+  padding: 0;
+}
+
+h3 {
+  margin: 5px 0;
+  padding: 0;
+}
+
+hr {
+  width: 100%;
+}
