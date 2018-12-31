@@ -9,7 +9,6 @@
     "postinstall": "npm run build",
     "dev": "nodemon --exec babel-node ./server/index.js",
     "lint": "eslint . --ext .js,.jsx",
-    "test": "test"
   },
   "repository": {
     "type": "git",
@@ -49,7 +48,8 @@
     "style-loader": "^0.23.1",
     "svg-inline-loader": "^0.8.0",
     "webpack": "^3.11.0",
-    "webpack-dev-middleware": "^2.0.2"
+    "webpack-dev-middleware": "^2.0.2",
+    "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
