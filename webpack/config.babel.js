@@ -15,7 +15,7 @@ export default {
   module: {
     rules: [
       {
-        test: /\.js?$/,
+        test: /\.jsx?$/,
         use: 'babel-loader',
         exclude: /node_modules/,
       },
@@ -32,6 +32,9 @@ export default {
         use: 'file-loader',
       },
     ],
+  },
+  resolve: {
+    extensions: ['.js', '.jsx'],
   },
   target: 'web',
 };
