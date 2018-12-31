@@ -5,8 +5,8 @@ import logger from 'morgan';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 
-import webpackDevServer from './webpack/dev-server';
-import routes from './routes';
+import webpackDevServer from '../webpack/dev-server';
+import routes from '../routes';
 
 // use dotenv
 dotenv.config({
@@ -17,7 +17,7 @@ dotenv.config({
 const app = express();
 
 // view engine
-app.set('views', path.join(__dirname, './views'));
+app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'pug');
 
 console.log(`env: ${process.env.NODE_ENV}`);

@@ -15,3 +15,5 @@ Run lint manually:
 npm run lint
 
 npx webpack --config webpack/config.babel.js
+
+yarn start
