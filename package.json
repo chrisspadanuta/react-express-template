@@ -61,8 +61,5 @@
     "nodemon": "^1.18.9",
     "pre-commit": "^1.2.2",
     "webpack-cli": "^2.1.5"
-  },
-  "pre-commit": [
-    "lint"
-  ]
+  }
 }
