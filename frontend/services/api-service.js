@@ -4,10 +4,17 @@ function buildPath(path) {
   return base + path;
 }
 
+function handleResponse(response) {
+  if (!response.ok) {
+    throw new Error(`${resonse.status}: ${response.statusText}`);
+  }
+  return response.json();
+}
+
 function get(path) {
   return fetch(buildPath(path), {
     method: 'GET'
-  }).then(result => result.json());
+  }).then(handleResponse);
 }
 
 function post(path, body) {
@@ -17,7 +24,7 @@ function post(path, body) {
       "Content-Type": 'application/json'
     },
     body: JSON.stringify(body)
-  }).then(result => result.json());
+  }).then(handleResponse);
 }
 
 export default {

@@ -122,6 +122,26 @@ class Admin extends React.PureComponent {
     );
   }
 
+  renderQuestions(questions) {
+    return questions.map((question, index) => {
+        return (
+          <React.Fragment key={index}>
+            <EditableQuestion item={question} index={index} updateQuestion={this.updateQuestion}/>
+            <hr/>
+          </React.Fragment>
+        );
+    });
+  }
+
+  renderQuestionsToolbar(questions) {
+    return (
+      <div className="question-toolbar">
+        {questions.length > 1 ? <button type="button" className="remove" onClick={this.removeQuestion}>Remove Question</button> : null}
+        <button type="button" className="add" onClick={this.addQuestion}>Add Question</button>
+      </div>
+    )
+  }
+
   render() {
     if (!this.state.poll) {
       return (
@@ -138,19 +158,9 @@ class Admin extends React.PureComponent {
         <div className="layout">
           <div className="content">
             {this.renderStatusArea(status)}
-            <div className="questions">
-              {questions.map((question, index) => {
-                return (
-                  <React.Fragment key={index}>
-                    <EditableQuestion item={question} index={index} updateQuestion={this.updateQuestion}/>
-                    <hr/>
-                  </React.Fragment>
-                );
-              })}
-              <div className="question-toolbar">
-                {questions.length > 1 ? <button type="button" className="remove" onClick={this.removeQuestion}>Remove Question</button> : null}
-                <button type="button" className="add" onClick={this.addQuestion}>Add Question</button>
-              </div>
+            <div className="questions-area">
+              {this.renderQuestions(questions)}
+              {this.renderQuestionsToolbar(questions)}
             </div>
             <hr/>
             <button type="submit" className="save-button" onClick={this.savePoll}>Save</button>
