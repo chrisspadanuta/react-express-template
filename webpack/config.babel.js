@@ -6,7 +6,7 @@ import path from 'path';
 
 export default {
   devtool: 'eval-source-map',
-  entry: path.join(process.cwd(), 'src/index'),
+  entry: path.join(process.cwd(), 'frontend/index'),
   output: {
     filename: 'bundle.js',
     path: path.join(process.cwd(), 'public', 'js'),
