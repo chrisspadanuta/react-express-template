@@ -5,7 +5,7 @@ import EditableQuestion from '../components/editable-question';
 import adminService from '../services/admin-service';
 
 function createQuestion() {
-  return { question: '', choices: ['', ''] }
+  return { question: '', choices: ['', '', '', ''], correctAnswer: 0 }
 }
 
 class Admin extends React.PureComponent {
@@ -123,10 +123,16 @@ class Admin extends React.PureComponent {
   }
 
   renderQuestions(questions) {
-    return questions.map((question, index) => {
+    return questions.map((item, index) => {
         return (
           <React.Fragment key={index}>
-            <EditableQuestion item={question} index={index} updateQuestion={this.updateQuestion}/>
+            <EditableQuestion
+              index={index}
+              question={item.question}
+              choices={item.choices}
+              correctAnswer={item.correctAnswer}
+              updateQuestion={this.updateQuestion}
+            />
             <hr/>
           </React.Fragment>
         );

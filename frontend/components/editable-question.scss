@@ -10,16 +10,37 @@
   font-size: 16px;
 }
 
+.choices-area {
+  margin: 0 0 10px 0;
+}
+
+.choices-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .sub-item {
+    margin: 0 5px;
+  }
+  .header-correct {
+    width: 60px;
+  }
+  .header-content {
+    flex: auto;
+  }
+}
+
 .choice-box {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 0 0 10px 0;
+
   .sub-item {
     margin: 0 5px;
   }
-  .label {
-    flex: initial;
+  .correct {
+    width: 60px;
   }
   .input-box {
     flex: auto;
@@ -29,12 +50,14 @@
 .choice-toolbar {
   display: flex;
   justify-content: space-between;
+
   button {
     flex: 1;
     margin: 5px;
     border-radius: 4px;
     padding: 5px;
     color: white;
+
     &.remove {
       background-color: maroon;
       border: 2px solid maroon;
