@@ -2,12 +2,7 @@ body {
   background: #cccccc;
 }
 
-h2 {
-  margin: 5px 0;
-  padding: 0;
-}
-
-h3 {
+h1, h2, h3 {
   margin: 5px 0;
   padding: 0;
 }
