@@ -23,7 +23,7 @@ class EditableQuestion extends React.PureComponent {
     this.props.updateQuestion(item, this.props.index);
   }
 
-  changeAnswer(index) {
+  changeChoice(index) {
     return (e) => {
       let value = e.target.value;
 
@@ -56,12 +56,12 @@ class EditableQuestion extends React.PureComponent {
     this.props.updateQuestion(item, this.props.index);
   }
 
-  renderAnswers() {
-    return this.props.item.choices.map((answer, index) => {
+  renderChoices() {
+    return this.props.item.choices.map((choice, index) => {
       return (
-        <div className="answer-box" key={index}>
+        <div className="choice-box" key={index}>
           <div className="label sub-item">#{index + 1}</div>
-          <input type="text" className="input-box sub-item" value={answer} onChange={this.changeAnswer(index)} />
+          <input type="text" className="input-box sub-item" value={choice} onChange={this.changeChoice(index)} />
         </div>
       );
     })
@@ -74,8 +74,8 @@ class EditableQuestion extends React.PureComponent {
         <h2>Question #{index + 1}</h2>
         <textarea className="question-box" onChange={this.changeQuestion} value={item.question}/>
         <h3>Choices</h3>
-        {this.renderAnswers(item.answers)}
-        <div className="answer-toolbar">
+        {this.renderChoices(item.choices)}
+        <div className="choice-toolbar">
           {item.choices.length > 2 ? <button type="button" className="remove" onClick={this.removeChoice}>Remove Choice</button> : null}
           {item.choices.length < 6 ? <button type="button" className="add" onClick={this.addChoice}>Add Choice</button> : null}
         </div>
