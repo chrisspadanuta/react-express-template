@@ -6,13 +6,7 @@ import Admin from './routes/admin';
 import Poll from './routes/poll';
 import Results from './routes/results';
 
-import styles from './styles.css';
-
-// function App() {
-//   return (
-//     <h1>Hello Again React!</h1>
-//   );
-// }
+import './styles.css';
 
 function App() {
   return (
