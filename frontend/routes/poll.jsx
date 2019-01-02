@@ -19,10 +19,11 @@ class Poll extends React.PureComponent {
         ],
       },
       answers: [null],
+      validAnswers: [false],
     };
 
     this.saveAnswers = this.saveAnswers.bind(this);
-    this.updateAnswer = this.updateAnswer.bind(this);
+    this.chooseAnswer = this.chooseAnswer.bind(this);
     this.closeStatus = this.closeStatus.bind(this);
   }
 
@@ -36,6 +37,7 @@ class Poll extends React.PureComponent {
       this.setState({
         poll: poll,
         answers: new Array(poll.questions.length),
+        validAnswers: poll.questions.map(item => false),
       });
     } catch (e) {
       this.setState({
@@ -67,18 +69,10 @@ class Poll extends React.PureComponent {
     }
   }
 
-  updateAnswer(chosenAnswer, index) {
+  chooseAnswer(chosenAnswer, index) {
     this.setState((prevState) => {
       const oldQuestions = prevState.poll.questions;
-
-    console.log('updated: ', {poll: {
-      questions: [
-        ...oldQuestions.slice(0, index),
-        { ...oldQuestions[index], chosenAnswer },
-        ...oldQuestions.slice(index + 1),
-      ]
-    }});
-
+      const oldValidAnswers = prevState.validAnswers;
       return {
         poll: {
           questions: [
@@ -86,7 +80,12 @@ class Poll extends React.PureComponent {
             { ...oldQuestions[index], chosenAnswer },
             ...oldQuestions.slice(index + 1),
           ]
-        }
+        },
+        validAnswers: [
+          ...oldValidAnswers.slice(0, index),
+          true,
+          ...oldValidAnswers.slice(index + 1),
+        ]
       }
     });
   }
@@ -121,7 +120,7 @@ class Poll extends React.PureComponent {
               question={item.question}
               choices={item.choices}
               chosenAnswer={item.chosenAnswer}
-              updateAnswer={this.updateAnswer}
+              chooseAnswer={this.chooseAnswer}
             />
             {index < questions.length - 1 && <hr/>}
           </React.Fragment>
@@ -138,6 +137,7 @@ class Poll extends React.PureComponent {
 
     const questions = this.state.poll.questions;
     const status = this.state.status;
+    const allQuestionsAnswered = !this.state.validAnswers.includes(false);
 
     return (
       <React.Fragment>
@@ -149,7 +149,7 @@ class Poll extends React.PureComponent {
               {this.renderQuestions(questions)}
             </div>
             <hr/>
-            <button type="submit" className="save-button" onClick={this.saveAnswers}>Save</button>
+            <button type="submit" className="save-button" onClick={this.saveAnswers} disabled={!allQuestionsAnswered}>Submit</button>
           </div>
         </div>
       </React.Fragment>

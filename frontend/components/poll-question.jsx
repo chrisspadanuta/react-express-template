@@ -12,7 +12,7 @@ class PollQuestion extends React.PureComponent {
 
   setAnswer(e) {
     const chosenIndex = Number.parseInt(e.target.value);
-    this.props.updateAnswer(chosenIndex, this.props.index);
+    this.props.chooseAnswer(chosenIndex, this.props.index);
   }
 
   renderChoices(choices, chosenAnswer, questionIndex) {
@@ -20,8 +20,16 @@ class PollQuestion extends React.PureComponent {
       <div className="choices-area">
         {choices.map((choice, index) =>
           <div className="choice-box" key={index}>
-            <input type="radio" className="answer-radio sub-item" name={`q${questionIndex}-choice`} onChange={this.setAnswer} checked={index === chosenAnswer} value={index}/>
-            <div className="answer-content sub-item">{choice}</div>
+            <input
+              type="radio"
+              className="answer-radio sub-item"
+              id={`q${questionIndex}-choice-${index}`}
+              name={`q${questionIndex}-choice`}
+              value={index}
+              onChange={this.setAnswer}
+              checked={index === chosenAnswer}
+            />
+            <label htmlFor={`q${questionIndex}-choice-${index}`} className="answer-content sub-item">{choice}</label>
           </div>
         )}
       </div>
@@ -44,7 +52,7 @@ PollQuestion.propTypes = {
   question: PropTypes.string,
   choices: PropTypes.array,
   chosenAnswer: PropTypes.number,
-  updateAnswer: PropTypes.func,
+  chooseAnswer: PropTypes.func,
 };
 
 export default PollQuestion;
