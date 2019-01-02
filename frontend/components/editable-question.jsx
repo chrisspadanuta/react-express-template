@@ -20,6 +20,7 @@ class EditableQuestion extends React.PureComponent {
     const item = {
       question: value,
       choices: [...oldChoices],
+      correctAnswer: this.props.correctAnswer,
     };
     this.props.updateQuestion(item, this.props.index);
   }
@@ -36,6 +37,7 @@ class EditableQuestion extends React.PureComponent {
           value,
           ...oldChoices.slice(index + 1),
         ],
+        correctAnswer: this.props.correctAnswer,
       };
       this.props.updateQuestion(item, this.props.index);
     };
@@ -45,6 +47,7 @@ class EditableQuestion extends React.PureComponent {
     const item = {
       question: this.props.question,
       choices: [...this.props.choices.slice(0, -1)],
+      correctAnswer: this.props.correctAnswer,
     };
     this.props.updateQuestion(item, this.props.index);
   }
@@ -53,6 +56,7 @@ class EditableQuestion extends React.PureComponent {
     const item = {
       question: this.props.question,
       choices: [...this.props.choices, ''],
+      correctAnswer: this.props.correctAnswer,
     };
     this.props.updateQuestion(item, this.props.index);
   }

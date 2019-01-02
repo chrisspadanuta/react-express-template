@@ -66,13 +66,12 @@ class Results extends React.PureComponent {
 
   renderChoices(question, chosenAnswer) {
     return question.choices.map((choice, index) => {
-      let choiceClass = 'choice';
-      if (index === question.correctAnswer) {
-        choiceClass += ' correct';
-      } else if (index === chosenAnswer) {
-        choiceClass += ' wrong';
-      }
-      return <div key={index} className={choiceClass}>{choice}</div>;
+      return (
+        <div key={index} className={'choice' + (index === question.correctAnswer ? ' correct' : '')}>
+          <div className="mark">[{index === chosenAnswer ? 'X' : ' '}]</div>
+          <div className="content">{choice}</div>
+        </div>
+      );
     });
   }
 
@@ -126,7 +125,7 @@ class Results extends React.PureComponent {
 
     return (
       <React.Fragment>
-        <h1>Results page</h1>
+        <h1>Results</h1>
         <div className="layout">
           <div className="content">
             {this.renderStatusArea(status)}

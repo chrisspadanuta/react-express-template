@@ -46,7 +46,7 @@
       border-width: 0 2px 2px 2px;
 
       .question-box {
-        padding: 10px 5px;
+        padding: 15px 10px;
 
         .question-content {
           font-weight: bold;
@@ -54,11 +54,22 @@
         .question-choices {
           margin: 10px;
 
+          .choice {
+            display: flex;
+            justify-content: flex-start;
+
+            .mark {
+              min-width: 50px;
+              font-family: monospace;
+            }
+            .content {
+              flex: auto;
+              align-items: flex-start;
+              text-align: left;
+            }
+          }
           .correct {
             background-color: lightgreen;
-          }
-          .wrong {
-            background-color: lightcoral;
           }
         }
       }

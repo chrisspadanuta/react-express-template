@@ -160,7 +160,7 @@ class Admin extends React.PureComponent {
 
     return (
       <React.Fragment>
-        <h1>Admin page</h1>
+        <h1>Poll Administration</h1>
         <div className="layout">
           <div className="content">
             {this.renderStatusArea(status)}

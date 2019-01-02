@@ -123,7 +123,7 @@ class Poll extends React.PureComponent {
               chosenAnswer={item.chosenAnswer}
               updateAnswer={this.updateAnswer}
             />
-            <hr/>
+            {index < questions.length - 1 && <hr/>}
           </React.Fragment>
         );
     });
@@ -141,7 +141,7 @@ class Poll extends React.PureComponent {
 
     return (
       <React.Fragment>
-        <h1>Poll page</h1>
+        <h1>Please answer some questions</h1>
         <div className="layout">
           <div className="content">
             {this.renderStatusArea(status)}
