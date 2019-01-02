@@ -1,17 +1,18 @@
 import apiService from './api-service'
 
-async function loadPoll() {
+async function loadQuestions() {
   try {
-    const result = await apiService.get('/poll');
+    const result = await apiService.get('/poll/questions');
     return result;
   } catch (e) {
+    console.log(e);
     throw new Error('An error occurred loading your poll');
   }
 }
 
 async function saveAnswers(poll) {
   try {
-    await apiService.post('/poll', poll)
+    await apiService.post('/poll/answers', poll)
     return 'Saved answers successfully';
   } catch (e) {
     throw new Error('An error occurred saving your answers')
@@ -19,5 +20,6 @@ async function saveAnswers(poll) {
 }
 
 export default {
+  loadQuestions,
   saveAnswers,
 }

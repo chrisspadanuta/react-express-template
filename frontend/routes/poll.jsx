@@ -1,8 +1,7 @@
 import React from 'react';
 
 import './admin.scss';
-import EditableQuestion from '../components/editable-question';
-import adminService from '../services/admin-service';
+import PollQuestion from '../components/poll-question';
 import pollService from '../services/poll-service';
 
 function createQuestion() {
@@ -18,13 +17,12 @@ class Poll extends React.PureComponent {
         questions: [
           createQuestion(),
         ],
-      }
+      },
+      answers: [null],
     };
 
-    this.removeQuestion = this.removeQuestion.bind(this);
-    this.addQuestion = this.addQuestion.bind(this);
-    this.updateQuestion = this.updateQuestion.bind(this);
-    this.savePoll = this.savePoll.bind(this);
+    this.saveAnswers = this.saveAnswers.bind(this);
+    this.updateAnswer = this.updateAnswer.bind(this);
     this.closeStatus = this.closeStatus.bind(this);
   }
 
@@ -34,9 +32,10 @@ class Poll extends React.PureComponent {
 
   async loadPoll() {
     try {
-      const poll = await adminService.loadPoll();
+      const poll = await pollService.loadQuestions();
       this.setState({
         poll: poll,
+        answers: new Array(poll.questions.length),
       });
     } catch (e) {
       this.setState({
@@ -48,8 +47,8 @@ class Poll extends React.PureComponent {
     }
   }
 
-  async savePoll() {
-    const answers = this.state.poll.map(item => item.chosenAnswer);
+  async saveAnswers() {
+    const answers = this.state.poll.questions.map(item => item.chosenAnswer);
     try {
       const statusMessage = await pollService.saveAnswers(answers);
       this.setState({
@@ -68,34 +67,23 @@ class Poll extends React.PureComponent {
     }
   }
 
-  removeQuestion() {
-    this.setState((prevState) => {
-      return {
-        poll: {
-          questions: [...prevState.poll.questions.slice(0, -1)],
-        }
-      };
-    });
-  }
-
-  addQuestion() {
-    this.setState((prevState) => {
-      return {
-        poll: {
-          questions: [...prevState.poll.questions, createQuestion()],
-        }
-      };
-    });
-  }
-
-  updateQuestion(item, index) {
+  updateAnswer(chosenAnswer, index) {
     this.setState((prevState) => {
       const oldQuestions = prevState.poll.questions;
+
+    console.log('updated: ', {poll: {
+      questions: [
+        ...oldQuestions.slice(0, index),
+        { ...oldQuestions[index], chosenAnswer },
+        ...oldQuestions.slice(index + 1),
+      ]
+    }});
+
       return {
         poll: {
           questions: [
             ...oldQuestions.slice(0, index),
-            item,
+            { ...oldQuestions[index], chosenAnswer },
             ...oldQuestions.slice(index + 1),
           ]
         }
@@ -128,26 +116,17 @@ class Poll extends React.PureComponent {
     return questions.map((item, index) => {
         return (
           <React.Fragment key={index}>
-            <EditableQuestion
+            <PollQuestion
               index={index}
               question={item.question}
               choices={item.choices}
-              correctAnswer={item.correctAnswer}
-              updateQuestion={this.updateQuestion}
+              chosenAnswer={item.chosenAnswer}
+              updateAnswer={this.updateAnswer}
             />
             <hr/>
           </React.Fragment>
         );
     });
-  }
-
-  renderQuestionsToolbar(questions) {
-    return (
-      <div className="question-toolbar">
-        {questions.length > 1 ? <button type="button" className="remove" onClick={this.removeQuestion}>Remove Question</button> : null}
-        <button type="button" className="add" onClick={this.addQuestion}>Add Question</button>
-      </div>
-    )
   }
 
   render() {
@@ -168,10 +147,9 @@ class Poll extends React.PureComponent {
             {this.renderStatusArea(status)}
             <div className="questions-area">
               {this.renderQuestions(questions)}
-              {this.renderQuestionsToolbar(questions)}
             </div>
             <hr/>
-            <button type="submit" className="save-button" onClick={this.savePoll}>Save</button>
+            <button type="submit" className="save-button" onClick={this.saveAnswers}>Save</button>
           </div>
         </div>
       </React.Fragment>

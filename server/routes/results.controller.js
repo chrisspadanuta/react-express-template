@@ -1,20 +1,22 @@
 import express from 'express';
 
-import resultsOrchestrator from '../orchestrators/results.orchestrator';
 import answersService from '../services/answers.service';
+
+import log from '../services/logger'
 
 const router = express.Router();
 
-router.route('/results/:id')
+router.route('/result/:id')
   .get((req, res) => {
     const id = Number.parseInt(req.params.id);
-    const result = resultsOrchestrator.retrievePoll(id);
+    const result = answersService.retrievePoll(id);
     res.status(200).json(result);
   });
 
-router.route('/results')
+router.route('/all')
   .get((req, res) => {
-    const results = answersService.retrievePoll(id);
+    const results = answersService.retrieveAll();
+    log('all results', results);
     res.status(200).json(results);
   });
 

@@ -1,5 +1,7 @@
 import log from './logger'
 
+//import makeshiftStorage from '../persist/makeshift-storage';
+
 let savedPoll = {
   questions: [
     {
@@ -18,6 +20,8 @@ function retrievePoll() {
 function savePoll(poll) {
   log('savePoll', poll);
   savedPoll = poll;
+  //makeshiftStorage.setQuestions(poll);
+  //log('makeshift storage', makeshiftStorage.getQuestions());
 }
 
 export default {
