@@ -44,10 +44,11 @@ class EditableQuestion extends React.PureComponent {
   }
 
   removeChoice() {
+    const newChoices = [...this.props.choices.slice(0, -1)];
     const item = {
       question: this.props.question,
-      choices: [...this.props.choices.slice(0, -1)],
-      correctAnswer: this.props.correctAnswer,
+      choices: newChoices,
+      correctAnswer: this.props.correctAnswer < newChoices.length ? this.props.correctAnswer : null,
     };
     this.props.updateQuestion(item, this.props.index);
   }
