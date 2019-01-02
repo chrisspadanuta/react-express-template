@@ -18,7 +18,17 @@ async function savePoll(poll) {
   }
 }
 
+async function loadSubmissions() {
+  try {
+    const result = await apiService.get('/admin/submissions');
+    return result;
+  } catch (e) {
+    throw new Error('An error occurred loading submissions');
+  }
+}
+
 export default {
   loadPoll,
   savePoll,
+  loadSubmissions,
 }
