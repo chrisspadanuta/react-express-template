@@ -82,7 +82,14 @@ class EditableQuestion extends React.PureComponent {
         </div>
         {choices.map((choice, index) =>
           <div className="choice-box" key={index}>
-            <input type="radio" className="correct sub-item" name={`q${questionIndex}-choice`} onChange={this.setCorrectChoice} checked={index === correct} value={index}/>
+            <input
+              type="radio"
+              className="correct sub-item"
+              name={`q${questionIndex}-choice`}
+              onChange={this.setCorrectChoice}
+              checked={index === correct}
+              value={index}
+            />
             <input type="text" className="input-box sub-item" value={choice} onChange={this.changeChoice(index)} />
           </div>
         )}
