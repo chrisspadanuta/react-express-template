@@ -3,25 +3,25 @@
   flex-direction: column;
   width: 600px;
   margin: 10px 0;
-}
 
-.question-toolbar {
-  display: flex;
-  justify-content: space-between;
-  button {
-    flex: 1;
-    margin: 5px;
-    border-radius: 4px;
-    padding: 5px;
-    color: white;
-    text-transform: uppercase;
-    &.remove {
-      background-color: maroon;
-      border: 2px solid maroon;
-    }
-    &.add {
-      background-color: darkgreen;
-      border: 2px solid darkgreen;
+  .question-toolbar {
+    display: flex;
+    justify-content: space-between;
+    button {
+      flex: 1;
+      margin: 5px;
+      border-radius: 4px;
+      padding: 5px;
+      color: white;
+      text-transform: uppercase;
+      &.remove {
+        background-color: maroon;
+        border: 2px solid maroon;
+      }
+      &.add {
+        background-color: darkgreen;
+        border: 2px solid darkgreen;
+      }
     }
   }
 }

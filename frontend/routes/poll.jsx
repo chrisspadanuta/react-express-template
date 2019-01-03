@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-import './admin.scss';
+import './poll.scss';
 import PollQuestion from '../components/poll-question';
 import pollService from '../services/poll-service';
 
@@ -24,7 +25,6 @@ class Poll extends React.PureComponent {
 
     this.saveAnswers = this.saveAnswers.bind(this);
     this.chooseAnswer = this.chooseAnswer.bind(this);
-    //this.closeStatus = this.closeStatus.bind(this);
   }
 
   async componentDidMount() {
@@ -40,12 +40,6 @@ class Poll extends React.PureComponent {
         validAnswers: poll.questions.map(() => false),
       });
     } catch (e) {
-      /*this.setState({
-        status: {
-          error: true,
-          message: e.message
-        }
-      });*/
       this.props.updateStatus(true, e.message);
     }
   }
@@ -54,20 +48,8 @@ class Poll extends React.PureComponent {
     const answers = this.state.poll.questions.map(item => item.chosenAnswer);
     try {
       const statusMessage = await pollService.saveAnswers(answers);
-      /*this.setState({
-        status: {
-          error: false,
-          message: statusMessage,
-        }
-      });*/
       this.props.updateStatus(false, statusMessage);
     } catch (e) {
-      /*this.setState({
-        status: {
-          error: true,
-          message: e.message
-        }
-      });*/
       this.props.updateStatus(true, e.message);
     }
   }
@@ -92,27 +74,6 @@ class Poll extends React.PureComponent {
       }
     });
   }
-
-  /*closeStatus() {
-    this.setState({
-      status: null
-    })
-  }*/
-
-  /*renderStatusArea(status) {
-    if (!status) {
-      return null;
-    }
-
-    const className = (status.error ? 'error ' : '') + 'status-area';
-
-    return (
-      <div className={className}>
-        {status.message}
-        <div className="close" onClick={this.closeStatus}>&times;</div>
-      </div>
-    );
-  }*/
 
   renderQuestions(questions) {
     return questions.map((item, index) => {
@@ -139,7 +100,6 @@ class Poll extends React.PureComponent {
     }
 
     const questions = this.state.poll.questions;
-    //const status = this.state.status;
     const allQuestionsAnswered = !this.state.validAnswers.includes(false);
 
     return (
@@ -153,5 +113,9 @@ class Poll extends React.PureComponent {
     );
   }
 }
+
+Poll.propTypes = {
+  updateStatus: PropTypes.func,
+};
 
 export default Poll;

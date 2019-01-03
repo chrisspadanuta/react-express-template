@@ -30,7 +30,6 @@ class Admin extends React.PureComponent {
     this.addQuestion = this.addQuestion.bind(this);
     this.updateQuestion = this.updateQuestion.bind(this);
     this.savePoll = this.savePoll.bind(this);
-    //this.closeStatus = this.closeStatus.bind(this);
   }
 
   async componentDidMount() {
@@ -51,12 +50,6 @@ class Admin extends React.PureComponent {
         });
       }
     } catch (e) {
-      /*this.setState({
-        status: {
-          error: true,
-          message: e.message
-        }
-      });*/
       this.props.updateStatus(true, e.message);
     }
   }
@@ -64,20 +57,8 @@ class Admin extends React.PureComponent {
   async savePoll() {
     try {
       const statusMessage = await adminService.savePoll(this.state.poll);
-      /*this.setState({
-        status: {
-          error: false,
-          message: statusMessage,
-        }
-      });*/
       this.props.updateStatus(false, statusMessage);
     } catch (e) {
-      /*this.setState({
-        status: {
-          error: true,
-          message: e.message
-        }
-      });*/
       this.props.updateStatus(true, e.message);
     }
   }
@@ -143,27 +124,6 @@ class Admin extends React.PureComponent {
     });
   }
 
-  /*closeStatus() {
-    this.setState({
-      status: null
-    });
-  }*/
-
-  /*renderStatusArea(status) {
-    if (!status) {
-      return null;
-    }
-
-    const className = (status.error ? 'error ' : '') + 'status-area';
-
-    return (
-      <div className={className}>
-        {status.message}
-        <div className="close" onClick={this.closeStatus}>&times;</div>
-      </div>
-    );
-  }*/
-
   renderQuestions(questions) {
     return questions.map((item, index) => {
       return (
@@ -198,7 +158,6 @@ class Admin extends React.PureComponent {
     }
 
     const questions = this.state.poll.questions;
-    //const status = this.state.status;
     const allQuestionsFilledOut = !this.state.validation.questions.includes(false);
     const allQuestionsChoicesValid = !this.state.validation.choices.includes(false);
     const allQuestionsHaveAnswers = !this.state.validation.answers.includes(false);
