@@ -2,19 +2,19 @@
 
 # Running:
 
-npm install
-npm start
+`npm install`
+`npm start`
 
 or 
 
-yarn install
-yarn start
+`yarn install`
+`yarn start`
 
 # Validation:
 
-Admin: The page will only allow the user to submit if each question has a question filled out, no blank choices, and a correct answer chosen.
-Poll: The page will only allow the user to submit if each question has a chosen answer.
-Results: Click polls to expand and collapse them.
+* Admin: The page will only allow the user to submit if each question has a question filled out, no blank choices, and a correct answer chosen.
+* Poll: The page will only allow the user to submit if each question has a chosen answer.
+* Results: Click polls to expand and collapse them.
 
 # Backend:
 
