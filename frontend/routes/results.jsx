@@ -13,10 +13,8 @@ class Results extends React.PureComponent {
         questions: [],
       },
       submissions: [],
-      activePoll: 1,
+      activePoll: null,
     };
-
-    this.closeStatus = this.closeStatus.bind(this);
   }
 
   async componentDidMount() {
@@ -35,33 +33,12 @@ class Results extends React.PureComponent {
     });
   }
 
-  closeStatus() {
-    this.setState({
-      status: null
-    })
-  }
-
   buildToggleSubmission(index) {
     return (e) => {
       this.setState({
         activePoll: index === this.state.activePoll ? null : index,
       });
     }
-  }
-
-  renderStatusArea(status) {
-    if (!status) {
-      return null;
-    }
-
-    const className = (status.error ? 'error ' : '') + 'status-area';
-
-    return (
-      <div className={className}>
-        {status.message}
-        <div className="close" onClick={this.closeStatus}>&times;</div>
-      </div>
-    );
   }
 
   renderChoices(question, chosenAnswer) {
@@ -128,7 +105,7 @@ class Results extends React.PureComponent {
         <h1>Results</h1>
         <div className="layout">
           <div className="content">
-            {this.renderStatusArea(status)}
+            (Expand and collapse polls by clicking on them)
             <div className="submissions-area">
               {this.renderSubmissions(this.state.submissions)}
             </div>
