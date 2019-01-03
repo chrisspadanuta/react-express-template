@@ -5,15 +5,12 @@ import resultsController from './results.controller'
 
 const router = express.Router();
 
-/* GET home page. */
-// router.get('/api/*', (req, res) => {
-//   res.end('hello api route');
-// });
-
+// API routes for for AJAX calls
 router.use('/api/admin', adminController);
 router.use('/api/poll', pollController);
 router.use('/api/results', resultsController);
 
+// Route for single page react app
 router.get('*', (req, res) => {
   res.render('index');
 });

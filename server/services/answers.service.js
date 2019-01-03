@@ -7,7 +7,7 @@ function retrieveAll() {
 }
 
 function retrievePoll(id) {
-  //log('retrievePoll', savedAnswers[id]);
+  log('retrieveAnswers', savedAnswers[id]);
   return savedAnswers[id];
 }
 

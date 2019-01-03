@@ -1,7 +1,6 @@
 import log from './logger'
 
-//import makeshiftStorage from '../persist/makeshift-storage';
-
+// Makeshift storage.  For a real service we'd store this in a relational database or MongoDB
 let savedPoll = null;
 
 function retrievePoll() {
@@ -12,8 +11,6 @@ function retrievePoll() {
 function savePoll(poll) {
   log('savePoll', poll);
   savedPoll = poll;
-  //makeshiftStorage.setQuestions(poll);
-  //log('makeshift storage', makeshiftStorage.getQuestions());
 }
 
 export default {
