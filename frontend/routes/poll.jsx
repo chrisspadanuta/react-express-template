@@ -24,7 +24,7 @@ class Poll extends React.PureComponent {
 
     this.saveAnswers = this.saveAnswers.bind(this);
     this.chooseAnswer = this.chooseAnswer.bind(this);
-    this.closeStatus = this.closeStatus.bind(this);
+    //this.closeStatus = this.closeStatus.bind(this);
   }
 
   async componentDidMount() {
@@ -37,15 +37,16 @@ class Poll extends React.PureComponent {
       this.setState({
         poll: poll,
         answers: new Array(poll.questions.length),
-        validAnswers: poll.questions.map(item => false),
+        validAnswers: poll.questions.map(() => false),
       });
     } catch (e) {
-      this.setState({
+      /*this.setState({
         status: {
           error: true,
           message: e.message
         }
-      });
+      });*/
+      this.props.updateStatus(true, e.message);
     }
   }
 
@@ -53,19 +54,21 @@ class Poll extends React.PureComponent {
     const answers = this.state.poll.questions.map(item => item.chosenAnswer);
     try {
       const statusMessage = await pollService.saveAnswers(answers);
-      this.setState({
+      /*this.setState({
         status: {
           error: false,
           message: statusMessage,
         }
-      });
+      });*/
+      this.props.updateStatus(false, statusMessage);
     } catch (e) {
-      this.setState({
+      /*this.setState({
         status: {
           error: true,
           message: e.message
         }
-      });
+      });*/
+      this.props.updateStatus(true, e.message);
     }
   }
 
@@ -90,13 +93,13 @@ class Poll extends React.PureComponent {
     });
   }
 
-  closeStatus() {
+  /*closeStatus() {
     this.setState({
       status: null
     })
-  }
+  }*/
 
-  renderStatusArea(status) {
+  /*renderStatusArea(status) {
     if (!status) {
       return null;
     }
@@ -109,7 +112,7 @@ class Poll extends React.PureComponent {
         <div className="close" onClick={this.closeStatus}>&times;</div>
       </div>
     );
-  }
+  }*/
 
   renderQuestions(questions) {
     return questions.map((item, index) => {
@@ -136,22 +139,16 @@ class Poll extends React.PureComponent {
     }
 
     const questions = this.state.poll.questions;
-    const status = this.state.status;
+    //const status = this.state.status;
     const allQuestionsAnswered = !this.state.validAnswers.includes(false);
 
     return (
       <React.Fragment>
-        <h1>Please answer some questions</h1>
-        <div className="layout">
-          <div className="content">
-            {this.renderStatusArea(status)}
-            <div className="questions-area">
-              {this.renderQuestions(questions)}
-            </div>
-            <hr/>
-            <button type="submit" className="save-button" onClick={this.saveAnswers} disabled={!allQuestionsAnswered}>Submit</button>
-          </div>
+        <div className="questions-area">
+          {this.renderQuestions(questions)}
         </div>
+        <hr/>
+        <button type="submit" className="save-button" onClick={this.saveAnswers} disabled={!allQuestionsAnswered}>Submit</button>
       </React.Fragment>
     );
   }

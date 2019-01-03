@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './admin.scss';
 import EditableQuestion from '../components/editable-question';
@@ -29,7 +30,7 @@ class Admin extends React.PureComponent {
     this.addQuestion = this.addQuestion.bind(this);
     this.updateQuestion = this.updateQuestion.bind(this);
     this.savePoll = this.savePoll.bind(this);
-    this.closeStatus = this.closeStatus.bind(this);
+    //this.closeStatus = this.closeStatus.bind(this);
   }
 
   async componentDidMount() {
@@ -50,31 +51,34 @@ class Admin extends React.PureComponent {
         });
       }
     } catch (e) {
-      this.setState({
+      /*this.setState({
         status: {
           error: true,
           message: e.message
         }
-      });
+      });*/
+      this.props.updateStatus(true, e.message);
     }
   }
 
   async savePoll() {
     try {
       const statusMessage = await adminService.savePoll(this.state.poll);
-      this.setState({
+      /*this.setState({
         status: {
           error: false,
           message: statusMessage,
         }
-      });
+      });*/
+      this.props.updateStatus(false, statusMessage);
     } catch (e) {
-      this.setState({
+      /*this.setState({
         status: {
           error: true,
           message: e.message
         }
-      });
+      });*/
+      this.props.updateStatus(true, e.message);
     }
   }
 
@@ -139,13 +143,13 @@ class Admin extends React.PureComponent {
     });
   }
 
-  closeStatus() {
+  /*closeStatus() {
     this.setState({
       status: null
-    })
-  }
+    });
+  }*/
 
-  renderStatusArea(status) {
+  /*renderStatusArea(status) {
     if (!status) {
       return null;
     }
@@ -158,22 +162,22 @@ class Admin extends React.PureComponent {
         <div className="close" onClick={this.closeStatus}>&times;</div>
       </div>
     );
-  }
+  }*/
 
   renderQuestions(questions) {
     return questions.map((item, index) => {
-        return (
-          <React.Fragment key={index}>
-            <EditableQuestion
-              index={index}
-              question={item.question}
-              choices={item.choices}
-              correctAnswer={item.correctAnswer}
-              updateQuestion={this.updateQuestion}
-            />
-            <hr/>
-          </React.Fragment>
-        );
+      return (
+        <React.Fragment key={index}>
+          <EditableQuestion
+            index={index}
+            question={item.question}
+            choices={item.choices}
+            correctAnswer={item.correctAnswer}
+            updateQuestion={this.updateQuestion}
+          />
+          <hr/>
+        </React.Fragment>
+      );
     });
   }
 
@@ -194,7 +198,7 @@ class Admin extends React.PureComponent {
     }
 
     const questions = this.state.poll.questions;
-    const status = this.state.status;
+    //const status = this.state.status;
     const allQuestionsFilledOut = !this.state.validation.questions.includes(false);
     const allQuestionsChoicesValid = !this.state.validation.choices.includes(false);
     const allQuestionsHaveAnswers = !this.state.validation.answers.includes(false);
@@ -202,21 +206,19 @@ class Admin extends React.PureComponent {
 
     return (
       <React.Fragment>
-        <h1>Poll Administration</h1>
-        <div className="layout">
-          <div className="content">
-            {this.renderStatusArea(status)}
-            <div className="questions-area">
-              {this.renderQuestions(questions)}
-              {this.renderQuestionsToolbar(questions)}
-            </div>
-            <hr/>
-            <button type="submit" className="save-button" onClick={this.savePoll} disabled={!pollValid}>Save</button>
-          </div>
+        <div className="questions-area">
+          {this.renderQuestions(questions)}
+          {this.renderQuestionsToolbar(questions)}
         </div>
+        <hr/>
+        <button type="submit" className="save-button" onClick={this.savePoll} disabled={!pollValid}>Save</button>
       </React.Fragment>
     );
   }
 }
+
+Admin.propTypes = {
+  updateStatus: PropTypes.func,
+};
 
 export default Admin;
