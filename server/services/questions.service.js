@@ -2,15 +2,7 @@ import log from './logger'
 
 //import makeshiftStorage from '../persist/makeshift-storage';
 
-let savedPoll = {
-  questions: [
-    {
-      question: '',
-      choices: ['', '', '', ''],
-      correctAnswer: 0,
-    }
-  ]
-};
+let savedPoll = null;
 
 function retrievePoll() {
   log('retrievePoll', savedPoll);

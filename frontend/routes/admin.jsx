@@ -18,7 +18,11 @@ class Admin extends React.PureComponent {
           createQuestion(),
         ],
       },
-      validAnswers: [false],
+      validation: {
+        questions: [false],
+        answers: [false],
+        choices: [false],
+      },
     };
 
     this.removeQuestion = this.removeQuestion.bind(this);
@@ -35,10 +39,16 @@ class Admin extends React.PureComponent {
   async loadPoll() {
     try {
       const poll = await adminService.loadPoll();
-      this.setState({
-        poll: poll,
-        validAnswers: poll.questions.map(item => typeof item.correctAnswer !== 'undefined' && item.correctAnswer >= 0),
-      });
+      if (poll) {
+        this.setState({
+          poll: poll,
+          validation: {
+            questions: poll.questions.map(() => true),
+            choices: poll.questions.map(() => true),
+            answers: poll.questions.map(() => true),
+          },
+        });
+      }
     } catch (e) {
       this.setState({
         status: {
@@ -74,7 +84,11 @@ class Admin extends React.PureComponent {
         poll: {
           questions: [...prevState.poll.questions.slice(0, -1)],
         },
-        validAnswers: [...prevState.validAnswers.slice(0, -1)],
+        validation: {
+          questions: [...prevState.validation.questions.slice(0, -1)],
+          choices: [...prevState.validation.choices.slice(0, -1)],
+          answers: [...prevState.validation.answers.slice(0, -1)],
+        }
       };
     });
   }
@@ -85,33 +99,44 @@ class Admin extends React.PureComponent {
         poll: {
           questions: [...prevState.poll.questions, createQuestion()],
         },
-        validAnswers: [...prevState.validAnswers, false],
+        validation: {
+          questions: [...prevState.validation.questions, false],
+          choices: [...prevState.validation.choices, false],
+          answers: [...prevState.validation.answers, false],
+        },
       };
     });
   }
 
   updateQuestion(item, index) {
-    const correctAnswerValid = item.correctAnswer != null && item.correctAnswer >= 0;
-
     this.setState((prevState) => {
-      const oldQuestions = prevState.poll.questions;
-      const oldValidAnswers = prevState.validAnswers;
       return {
         poll: {
           questions: [
-            ...oldQuestions.slice(0, index),
+            ...prevState.poll.questions.slice(0, index),
             item,
-            ...oldQuestions.slice(index + 1),
-          ]
+            ...prevState.poll.questions.slice(index + 1),
+          ],
         },
-        validAnswers: [
-          ...oldValidAnswers.slice(0, index),
-          correctAnswerValid,
-          ...oldValidAnswers.slice(index + 1),
-        ]
+        validation: {
+          questions: [
+            ...prevState.validation.questions.slice(0, index),
+            !!item.question,
+            ...prevState.validation.questions.slice(index + 1),
+          ],
+          choices: [
+            ...prevState.validation.choices.slice(0, index),
+            !item.choices.includes(''),
+            ...prevState.validation.choices.slice(index + 1),
+          ],
+          answers: [
+            ...prevState.validation.answers.slice(0, index),
+            item.correctAnswer != null && item.correctAnswer >= 0,
+            ...prevState.validation.answers.slice(index + 1),
+          ],
+        }
       }
     });
-    console.log('validAnswers', this.state.validAnswers);
   }
 
   closeStatus() {
@@ -170,7 +195,10 @@ class Admin extends React.PureComponent {
 
     const questions = this.state.poll.questions;
     const status = this.state.status;
-    const allQuestionsAnswered = !this.state.validAnswers.includes(false);
+    const allQuestionsFilledOut = !this.state.validation.questions.includes(false);
+    const allQuestionsChoicesValid = !this.state.validation.choices.includes(false);
+    const allQuestionsHaveAnswers = !this.state.validation.answers.includes(false);
+    const pollValid = allQuestionsFilledOut && allQuestionsChoicesValid && allQuestionsHaveAnswers;
 
     return (
       <React.Fragment>
@@ -183,7 +211,7 @@ class Admin extends React.PureComponent {
               {this.renderQuestionsToolbar(questions)}
             </div>
             <hr/>
-            <button type="submit" className="save-button" onClick={this.savePoll} disabled={!allQuestionsAnswered}>Save</button>
+            <button type="submit" className="save-button" onClick={this.savePoll} disabled={!pollValid}>Save</button>
           </div>
         </div>
       </React.Fragment>
