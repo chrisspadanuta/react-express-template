@@ -85,9 +85,6 @@ function onListening() {
     typeof addr === 'string' ? addr : addr.port
   }`;
   log(`Server is listening on ${bind}`);
-  log(`Admin: http://localhost:${addr.port}/admin`);
-  log(`Poll: http://localhost:${addr.port}/poll`);
-  log(`Results: http://localhost:${addr.port}/results`);
 }
 
 /**
