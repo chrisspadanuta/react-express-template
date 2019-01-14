@@ -1,21 +1,3 @@
-.grid-of-life {
-  display: flex;
-  flex-direction: column;
-
-  .grid-row {
-    display: flex;
-    flex-direction: row;
-
-    .grid-cell {
-      width: 32px;
-      height: 32px;
-      border: 2px solid black;
-      &.alive {
-        background-color: green;
-      }
-      &.dead {
-        background-color: red;
-      }
-    }
-  }
+.main {
+  font-size: 20px;
 }
