@@ -2,11 +2,9 @@ import express from 'express';
 
 const router = express.Router();
 
-/* GET home page. */
-router.get('/api/*', (req, res) => {
-  res.end('hello api route');
-});
+// API routes for for AJAX calls
 
+// Route for single page react app
 router.get('*', (req, res) => {
   res.render('index');
 });

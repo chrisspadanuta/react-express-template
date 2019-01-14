@@ -8,8 +8,7 @@
     "build": "NODE_ENV=production npx env-cmd .env webpack --config ./webpack/config-prod.babel.js",
     "postinstall": "npm run build",
     "dev": "nodemon --exec babel-node ./server/index.js",
-    "lint": "eslint . --ext .js,.jsx",
-    "test": "test"
+    "lint": "eslint . --ext .js,.jsx"
   },
   "repository": {
     "type": "git",
@@ -38,8 +37,10 @@
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "file-loader": "^3.0.1",
+    "moment": "^2.23.0",
     "morgan": "^1.9.1",
     "node-sass": "^4.11.0",
+    "prop-types": "^15.6.2",
     "pug": "^2.0.3",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
@@ -48,20 +49,12 @@
     "style-loader": "^0.23.1",
     "svg-inline-loader": "^0.8.0",
     "webpack": "^3.11.0",
-    "webpack-dev-middleware": "^2.0.2"
+    "webpack-dev-middleware": "^2.0.2",
+    "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
-    "babel-eslint": "^10.0.1",
-    "eslint": "^5.11.1",
-    "eslint-config-airbnb": "^17.1.0",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jsx-a11y": "^6.1.2",
-    "eslint-plugin-react": "^7.12.0",
+    "babel-polyfill": "^6.26.0",
     "nodemon": "^1.18.9",
-    "pre-commit": "^1.2.2",
     "webpack-cli": "^2.1.5"
-  },
-  "pre-commit": [
-    "lint"
-  ]
+  }
 }

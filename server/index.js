@@ -1,12 +1,6 @@
 import http from 'http';
 import app from './app';
-
-/**
- * Simple logger function.
- */
-function log(message) {
-  process.stdout.write(`${message}\n`);
-}
+import log from './services/logger'
 
 /**
  * Normalize a port into a number, string, or false.
@@ -30,7 +24,7 @@ function normalizePort(val) {
 /**
  * Get port from environment and store in Express.
  */
-const port = normalizePort(process.env.PORT || 3000);
+const port = normalizePort(process.env.PORT || 8080);
 app.set('port', port);
 
 /**
@@ -91,7 +85,6 @@ function onListening() {
     typeof addr === 'string' ? addr : addr.port
   }`;
   log(`Server is listening on ${bind}`);
-  log(`Visit: http://localhost:${addr.port}`);
 }
 
 /**

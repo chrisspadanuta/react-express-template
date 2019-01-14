@@ -1,19 +1,11 @@
 # react-express-template
 
-npm install
-npm start
+# Running:
 
-Requires node.js version 8.1.4 or newer, otherwise replace start command with:
-babel-node ./index.js
+`npm install`
+`npm start`
 
-Linting pre-commit hook currently not enabled.  Add this to package.json to enable:
-  "pre-commit": [
-    "lint"
-  ]
+or 
 
-Run lint manually:
-npm run lint
-
-npx webpack --config webpack/config.babel.js
-
-yarn start
+`yarn install`
+`yarn start`

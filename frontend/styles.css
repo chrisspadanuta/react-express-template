@@ -1,11 +1,14 @@
 body {
-  background: #333333;
+  background: #cccccc;
 }
 
-.globalClass {
-  color: blue;
+h1, h2, h3 {
+  margin: 5px 0;
+  padding: 0;
 }
 
-:local(.localClass) {
-  color: red;
+hr {
+  width: 100%;
+  padding: 0;
+  margin: 0;
 }
