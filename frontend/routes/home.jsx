@@ -2,8 +2,8 @@ import React from 'react';
 
 import './home.scss';
 
-const GRID_WIDTH = 3; //32;
-const GRID_HEIGHT = 3; //32;
+const GRID_WIDTH = 6; //32;
+const GRID_HEIGHT = 6; //32;
 
 class Home extends React.PureComponent {
   constructor(props) {
@@ -32,12 +32,34 @@ class Home extends React.PureComponent {
 
   randomizeGrid() {
     const grid = new Array(GRID_HEIGHT);
-    for (let y = 0; y < GRID_HEIGHT; y++) {
+    /*for (let y = 0; y < GRID_HEIGHT; y++) {
       grid[y] = new Array(GRID_WIDTH);
       for (let x = 0; x < GRID_WIDTH; x++) {
         grid[y][x] = this.getRandomBoolean();
       }
-    }
+    }*/
+    // blinker
+    /*grid[0] = [0, 0, 0, 0, 0];
+    grid[1] = [0, 0, 1, 0, 0];
+    grid[2] = [0, 0, 1, 0, 0];
+    grid[3] = [0, 0, 1, 0, 0];
+    grid[4] = [0, 0, 0, 0, 0];*/
+
+    // toad
+    grid[0] = [0, 0, 0, 0, 0, 0];
+    grid[1] = [0, 0, 0, 1, 0, 0];
+    grid[2] = [0, 1, 0, 0, 1, 0];
+    grid[3] = [0, 1, 0, 0, 1, 0];
+    grid[4] = [0, 0, 1, 0, 0, 0];
+    grid[5] = [0, 0, 0, 0, 0, 0];
+
+    // beacon
+    /*grid[0] = [0, 0, 0, 0, 0, 0];
+    grid[1] = [0, 1, 1, 0, 0, 0];
+    grid[2] = [0, 1, 0, 0, 0, 0];
+    grid[3] = [0, 0, 0, 0, 1, 0];
+    grid[4] = [0, 0, 0, 1, 1, 0];
+    grid[5] = [0, 0, 0, 0, 0, 0];*/
 
     this.setState({
       grid: grid,
@@ -68,7 +90,7 @@ class Home extends React.PureComponent {
       newGrid[y] = new Array(GRID_WIDTH);
       for (let x = 0; x < GRID_WIDTH; x++) {
         const alive = this.countSurrounding(x, y);
-        if (oldGrid[y, x]) {
+        if (oldGrid[y][x]) {
           // current cell is alive
           if (alive >= 2 && alive <= 3) {
             newGrid[y][x] = true;
@@ -79,6 +101,8 @@ class Home extends React.PureComponent {
           // current cell is dead
           if (alive === 3) {
             newGrid[y][x] = true;
+          } else {
+            newGrid[y][x] = false;
           }
         }
       }
