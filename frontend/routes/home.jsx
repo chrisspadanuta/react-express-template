@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import './home.scss';
+import "./home.scss";
 
 const GRID_WIDTH = 6; //32;
 const GRID_HEIGHT = 6; //32;
@@ -9,10 +9,17 @@ class Home extends React.PureComponent {
   constructor(props) {
     super(props);
 
+    this.xDimension = React.createRef();
+    this.yDimension = React.createRef();
+
     this.state = {
-      grid: [],
+      gridWidth: GRID_WIDTH,
+      gridHeight: GRID_HEIGHT,
+      grid: []
     };
 
+    this.changeSize = this.changeSize.bind(this);
+    this.toggleBox = this.toggleBox.bind(this);
     this.startSimulation = this.startSimulation.bind(this);
     this.stopSimulation = this.stopSimulation.bind(this);
     this.runCycle = this.runCycle.bind(this);
@@ -31,10 +38,10 @@ class Home extends React.PureComponent {
   }
 
   randomizeGrid() {
-    const grid = new Array(GRID_HEIGHT);
-    /*for (let y = 0; y < GRID_HEIGHT; y++) {
-      grid[y] = new Array(GRID_WIDTH);
-      for (let x = 0; x < GRID_WIDTH; x++) {
+    const grid = new Array(this.state.gridHeight);
+    /*for (let y = 0; y < this.state.gridHeight; y++) {
+      grid[y] = new Array(this.state.gridWidth);
+      for (let x = 0; x < this.state.gridWidth; x++) {
         grid[y][x] = this.getRandomBoolean();
       }
     }*/
@@ -62,33 +69,77 @@ class Home extends React.PureComponent {
     grid[5] = [0, 0, 0, 0, 0, 0];*/
 
     this.setState({
-      grid: grid,
-    }, this.startSimulation);
+      grid: grid
+    });
+  }
+
+  changeSize() {
+    const gridWidth = Number.parseInt(this.xDimension.current.value);
+    const gridHeight = Number.parseInt(this.yDimension.current.value);
+    console.log(gridWidth, gridHeight);
+    const newGrid = new Array(gridHeight);
+
+    const grid = this.state.grid;
+
+    for (let y = 0; y < gridHeight; y++) {
+      newGrid[y] = new Array(gridWidth);
+      for (let x = 0; x < gridWidth; x++) {
+        if (y < this.state.gridHeight && x < this.state.gridWidth) {
+          newGrid[y][x] = grid[y][x];
+        } else {
+          newGrid[y][x] = 0;
+        }
+      }
+    }
+
+    this.setState({
+      gridWidth: gridWidth,
+      gridHeight: gridHeight,
+      grid: newGrid
+    });
+  }
+
+  toggleBox(y, x) {
+    const grid = this.state.grid;
+
+    this.setState({
+      grid: [
+        ...grid.slice(0, y),
+        [
+          ...grid[y].slice(0, x),
+          this.state.grid[y][x] ? 0 : 1,
+          ...grid[y].slice(x + 1)
+        ],
+        ...grid.slice(y + 1)
+      ]
+    });
   }
 
   startSimulation() {
-    const simulationInterval = setInterval(this.runCycle, 2000);
+    const simulationInterval = setInterval(this.runCycle, 1000);
     this.setState({
-      simulationInterval: simulationInterval,
-    })
+      simulationInterval: simulationInterval
+    });
   }
 
   stopSimulation() {
     if (this.state.simulationInterval) {
       clearInterval(this.state.simulationInterval);
       this.setState({
-        simulationInterval: null,
+        simulationInterval: null
       });
     }
   }
 
   runCycle() {
     const oldGrid = this.state.grid;
+    const gridHeight = this.state.gridHeight;
+    const gridWidth = this.state.gridWidth;
 
-    const newGrid = new Array(GRID_HEIGHT);
-    for (let y = 0; y < GRID_HEIGHT; y++) {
-      newGrid[y] = new Array(GRID_WIDTH);
-      for (let x = 0; x < GRID_WIDTH; x++) {
+    const newGrid = new Array(gridHeight);
+    for (let y = 0; y < gridHeight; y++) {
+      newGrid[y] = new Array(gridWidth);
+      for (let x = 0; x < gridWidth; x++) {
         const alive = this.countSurrounding(x, y);
         if (oldGrid[y][x]) {
           // current cell is alive
@@ -108,10 +159,8 @@ class Home extends React.PureComponent {
       }
     }
 
-    //console.log('runCycle', newGrid);
-
     this.setState({
-      grid: newGrid,
+      grid: newGrid
     });
   }
 
@@ -129,7 +178,7 @@ class Home extends React.PureComponent {
     alive += rowResult;
 
     // bottom
-    if (y < GRID_HEIGHT - 1) {
+    if (y < this.state.gridHeight - 1) {
       const rowResult = this.countRow(x, y + 1);
       alive += rowResult;
     }
@@ -157,7 +206,7 @@ class Home extends React.PureComponent {
     }
 
     // right
-    if (x < GRID_WIDTH - 1) {
+    if (x < this.state.gridWidth - 1) {
       if (row[x + 1]) {
         alive++;
       }
@@ -168,27 +217,39 @@ class Home extends React.PureComponent {
 
   render() {
     const grid = this.state.grid;
+    const simulationRunning = !!this.state.simulationInterval;
 
     return (
       <div className="main">
         <div className="toolbar">
-          { this.state.simulationInterval
-            ? <button onClick={this.stopSimulation}>Stop</button>
-            : <button onClick={this.startSimulation}>Start</button>
-          }
+          {simulationRunning ? (
+            <button onClick={this.stopSimulation}>Stop</button>
+          ) : (
+            <button onClick={this.startSimulation}>Start</button>
+          )}
+          <input type="text" ref={this.xDimension} style={{ width: "30px" }} />
+          <input type="text" ref={this.yDimension} style={{ width: "30px" }} />
+          <button onClick={this.changeSize}>Update Size</button>
         </div>
         <div className="grid-of-life">
-          { grid.map((row, rowIndex) => {
+          {grid.map((row, rowIndex) => {
             return (
               <div key={rowIndex} className="grid-row">
-                { row.map((cell, cellIndex) => {
+                {row.map((cell, cellIndex) => {
                   return (
-                    <div key={cellIndex} className={'grid-cell ' + (cell ? 'alive' : 'dead')}>
-                    </div>
-                  )
+                    <div
+                      key={cellIndex}
+                      className={"grid-cell " + (cell ? "alive" : "dead")}
+                      onClick={
+                        !simulationRunning
+                          ? () => this.toggleBox(rowIndex, cellIndex)
+                          : null
+                      }
+                    />
+                  );
                 })}
               </div>
-            )
+            );
           })}
         </div>
       </div>

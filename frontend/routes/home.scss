@@ -9,12 +9,29 @@
     .grid-cell {
       width: 32px;
       height: 32px;
-      border: 2px solid black;
+      border: 2px solid #666;
       &.alive {
-        background-color: green;
+        background-color: black;
       }
       &.dead {
-        background-color: red;
+        background-color: white;
+      }
+      &:first-child {
+        border-left: 4px solid #666;
+      }
+      &:last-child {
+        border-right: 4px solid #666;
+      }
+    }
+
+    &:first-child {
+      .grid-cell {
+        border-top: 4px solid #666;
+      }
+    }
+    &:last-child {
+      .grid-cell {
+        border-bottom: 4px solid #666;
       }
     }
   }
