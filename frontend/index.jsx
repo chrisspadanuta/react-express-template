@@ -11,4 +11,4 @@ console.log(resultA, resultB);
 console.log(createdObject);
 
 // render the app
-render(<App />, document.getElementById('app'));
+render(<App />, document.getElementById('app')); // eslint-disable-line no-undef

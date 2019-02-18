@@ -1,6 +1,6 @@
 import http from 'http';
 import app from './app';
-import log from './services/logger'
+import log from './services/logger';
 
 /**
  * Normalize a port into a number, string, or false.
@@ -48,9 +48,7 @@ function onError(error) {
     throw error;
   }
 
-  const bind = `${
-    typeof port === 'string' ? 'Pipe' : 'Port'
-  } ${port}`;
+  const bind = `${typeof port === 'string' ? 'Pipe' : 'Port'} ${port}`;
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
@@ -79,9 +77,7 @@ function onError(error) {
  */
 function onListening() {
   const addr = server.address();
-  const bind = `${
-    typeof addr === 'string' ? 'pipe' : 'port'
-  } ${
+  const bind = `${typeof addr === 'string' ? 'pipe' : 'port'} ${
     typeof addr === 'string' ? addr : addr.port
   }`;
   log(`Server is listening on ${bind}`);
